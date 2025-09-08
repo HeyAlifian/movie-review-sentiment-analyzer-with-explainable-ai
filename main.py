@@ -34,8 +34,13 @@ def predict_sentiment(review):
     return sentiment, probability_percentage
 
 # Main Code
-review = "The movie was great and incredible! This is worth the wait."
-sentiment, probability_percentage = predict_sentiment(review)
+while True:
+    review = input("Enter a review: ")
+    
+    if review != "":
+        sentiment, probability_percentage = predict_sentiment(review)
 
-print("Sentiment:", sentiment)
-print("Percentage:", probability_percentage)
+        print("Sentiment:", sentiment)
+        print("Percentage:", probability_percentage)
+    else:
+        print("Please enter a review to predict.")
