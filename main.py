@@ -38,9 +38,11 @@ while True:
     review = input("\nEnter a review          : ")
     
     if review != "":
-        sentiment, probability_percentage = predict_sentiment(review)
+        sentiment, probability_percentage   = predict_sentiment(review)
+        negative_percentage                 = probability_percentage[0]
+        positive_percentage                 = probability_percentage[1]
 
-        print("SENTIMENT               :", sentiment)
+        print("SENTIMENT               :", sentiment, f"({negative_percentage:.3g}% Negativity, {positive_percentage:.3g}% Positivity)")
         print("PROBABILITY_PERCENTAGE  :", probability_percentage)
     else:
         print("Please enter a review to predict.")
