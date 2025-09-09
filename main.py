@@ -20,9 +20,7 @@ tokenizer = RegexpTokenizer(r"[A-Za-z']+")
 def clean_text(text):
 
     text = re.sub(r'<.*?>', ' ', text)
-    
     tokens = tokenizer.tokenize(text.lower())
-    
     tokens = [t for t in tokens if t not in stop_words]
 
     return " ".join(tokens)
@@ -30,12 +28,9 @@ def clean_text(text):
 def predict_sentiment(review):
 
     cleaned = clean_text(review)
-    
     X_vectorized = vectorizer.transform([cleaned])
-    
     prediction = model.predict(X_vectorized)[0]
     probability_percentage = model.predict_proba(X_vectorized)[0]
-    
     sentiment = f"{GREEN}Positive" if prediction == 1 else f"{RED}Negative"
 
     return sentiment, probability_percentage
