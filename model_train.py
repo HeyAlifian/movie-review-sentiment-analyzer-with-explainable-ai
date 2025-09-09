@@ -14,7 +14,7 @@ import nltk
 
 nltk.download("stopwords")
 
-class RawDProcessor:
+class RAWDATAProcessor:
     def __init__(self, dataset_path: str, drop_na: bool = True, separator: any = ",") -> None:
 
         assert isinstance(dataset_path, str), f"Invalid type of 'dataset_path', expected str. Found {type(dataset_path)}"
@@ -35,7 +35,6 @@ class RawDProcessor:
         data                = re.sub(r'<.*?>', ' ', data)
         tokens              = self.tokenizer.tokenize(data.lower())
         tokens              = [t for t in tokens if t not in self.stop_words]
-
         return " ".join(tokens)
 
     def Head(self):
@@ -55,10 +54,10 @@ def SaveModel(model, file_name: str, path: str = r"Models") -> None:
         print(f"NO MODELS INPUTTED.")
 
 
-# Main Code
+# TRAIN PROCESS
 dataset_path    = r"Datasets\imdb-datasets.csv"
 
-dataset         = RawDProcessor(dataset_path=dataset_path, drop_na=True, separator=',').Return()
+dataset         = RAWDATAProcessor(dataset_path=dataset_path, drop_na=True, separator=',').Return()
 
 X               = dataset["clean_review"]
 y               = dataset["sentiment"].map({"negative": 0, "positive": 1})
@@ -77,12 +76,13 @@ model.fit(X_train_tfidf, y_train)
 y_prediction    = model.predict(X_test_tfidf)
 
 print("ACCURACY:", accuracy_score(y_test, y_prediction))
-print("\nCLASSIFICATION REPORT:\n---------------------------------------\n",classification_report(y_test, y_prediction))
+print("\nCLASSIFICATION REPORT:\n-------------------------------------------------\n",classification_report(y_test, y_prediction))
 
 X_all           = dataset['clean_review']
 y_all           = dataset["sentiment"].map({'negative':0, 'positive':1})
 
-print("ALL DATA TRAIN")
+# FULL DATA TRAINING
+print("FULL DATA TRAINING...")
 X_all_tfidf     = vectorizer.fit_transform(X_all)
 final_model     = LogisticRegression(max_iter=200)
 final_model.fit(X_all_tfidf, y_all)
