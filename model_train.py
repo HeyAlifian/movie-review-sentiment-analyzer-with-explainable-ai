@@ -3,7 +3,6 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from lime.lime_text import LimeTextExplainer
 from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
 

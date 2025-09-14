@@ -4,18 +4,19 @@ import joblib
 from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
 from colorama import Fore, init
+from AInsights import AInsights
 
 init(autoreset=True)
-GREEN   = Fore.GREEN
-RED     = Fore.RED
-YELLOW  = Fore.YELLOW
+GREEN       = Fore.GREEN
+RED         = Fore.RED
+YELLOW      = Fore.YELLOW
 
-# Load 'em models.
-model      = joblib.load(r"Models\sentiment_model.pkl")
-vectorizer = joblib.load(r"Models\tfidf_vectorizer.pkl")
+# [i] Load 'em models.
+model       = joblib.load(r"Models\sentiment_model.pkl")
+vectorizer  = joblib.load(r"Models\tfidf_vectorizer.pkl")
 
-stop_words = set(stopwords.words("english"))
-tokenizer = RegexpTokenizer(r"[A-Za-z']+")
+stop_words  = set(stopwords.words("english"))
+tokenizer   = RegexpTokenizer(r"[A-Za-z']+")
 
 def clean_text(text):
 
@@ -35,16 +36,18 @@ def predict_sentiment(review):
 
     return sentiment, probability_percentage
 
-# Main Code
+# [i] Main Code
 while True:
-    review = input("\nEnter a review          : ")
+    review      = input("\nEnter a review           : ")
     
     if review != "":
         sentiment, probability_percentage   = predict_sentiment(review)
+        insights                            = AInsights(review)
         negative_percentage                 = probability_percentage[0] * 100
         positive_percentage                 = probability_percentage[1] * 100
 
-        print("SENTIMENT               :", sentiment, f"{YELLOW}({negative_percentage:.3g}% Negativity, {positive_percentage:.3g}% Positivity)")
-        print("PROBABILITY_PERCENTAGE  :", probability_percentage)
+        print("SENTIMENT                :", sentiment, f"{YELLOW}({negative_percentage:.3g}% Negativity, {positive_percentage:.3g}% Positivity)")
+        print("PROBABILITY_PERCENTAGE   :", probability_percentage)
+        insights.Explain()
     else:
-        print("Please enter a review to predict.")
+        print("Please enter a review to predict.") 
