@@ -1,2 +1,2 @@
-# movie-review-sentiment-analyzer-with-explainable-ai-and-insights
+# movie-review-sentiment-analyzer-with-insights
 
